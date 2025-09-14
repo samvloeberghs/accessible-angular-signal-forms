@@ -1,0 +1,134 @@
+:host {
+  display: block;
+  width: 480px;
+  margin: 0 auto;
+}
+
+.form {
+  &__title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__fieldset {
+    border: 1px solid #ccc;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__legend {
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    font-weight: bold
+  }
+
+  &__row {
+    margin-bottom: 1rem;
+    // border-bottom: 1px solid #aaa;
+    // padding-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__description {
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  &__field-description {
+    font-weight: 300;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+
+    &--checkbox {
+      margin-bottom: 0;
+    }
+
+    &::before {
+      content: 'ℹ️ ';
+    }
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+    font-weight: 600;
+
+    &--checkbox {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border: 1px solid #555;
+    font-size: 1rem;
+    box-sizing: border-box;
+
+    &::placeholder {
+      font-style: italic;
+      color: #333;
+      opacity: 1;
+    }
+
+    &[aria-invalid='true'] {
+      border-color: red;
+    }
+  }
+
+  &__checkbox {
+    margin: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &__checkbox-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  &__password-feedback {
+    margin-top: 0.5rem;
+  }
+
+  &__general-error {
+    color: red;
+    margin-bottom: 0.5rem;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.submit-outiside {
+  margin-bottom: 1rem;
+}
+
+.button {
+  padding: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.resources,
+.tips {
+  list-style: disc;
+
+  li {
+    margin-left: 1rem;
+    margin-bottom: 0.25rem;
+  }
+}
