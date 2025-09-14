@@ -5,21 +5,21 @@ export async function fakeSubmitToBackend(registrationForm: Field<Registration>)
   const usedEmails = ['sam@kwerri.be'];
   const randomFailure = Math.random() < 0.3;
 
-  let error: ValidationError;
+  let potentialValidationError: ValidationError | null = null;
 
   if (usedEmails.includes(registrationForm.email().value())) {
-    error = { kind: 'email-already-in-use', field: registrationForm.email, message: 'Email already in use' };
+    potentialValidationError = {
+      kind: 'email-already-in-use',
+      field: registrationForm.email,
+      message: 'Email already in use'
+    };
   } else if (randomFailure) {
-    error = { kind: 'server-error', field: registrationForm, message: 'Random server error' };
+    potentialValidationError = { kind: 'server-error', field: registrationForm, message: 'Random server error' };
   }
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (error) {
-        resolve(error);
-      } else {
-        resolve(null);
-      }
+      resolve(potentialValidationError);
     }, 3000);
   });
 }

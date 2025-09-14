@@ -132,3 +132,18 @@
     margin-bottom: 0.25rem;
   }
 }
+
+.submitted {
+  color: green;
+  margin-bottom: 0.5rem;
+
+  &::before {
+    content: '✅️ ';
+  }
+}
+
+.codeblock {
+  padding: 0.5rem;
+  background: #eee;
+  line-height: 1.25;
+}

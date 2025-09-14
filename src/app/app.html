@@ -1,142 +1,149 @@
-<form class="form" (submit)="handleSubmit($event)" id="registration-form" novalidate (reset)="handleReset($event)">
-  <h1 class="form__title">Registration</h1>
+@if (submitted()) {
+  <p class="submitted">The form got submitted!</p>
+  <pre class="codeblock"><code>{{ registration() | json }}</code></pre>
+} @else {
+  <form class="form" (submit)="handleSubmit($event)" id="registration-form" novalidate (reset)="handleReset($event)">
+    <h1 class="form__title">Registration</h1>
 
-  <p class="form__description">
-    All fields marked "required" must be completed.
-  </p>
+    <p class="form__description">
+      All fields marked "required" must be completed.
+    </p>
 
-  <fieldset class="form__fieldset">
-    <legend class="form__legend">Your account</legend>
+    <fieldset class="form__fieldset">
+      <legend class="form__legend">Your account</legend>
 
-    <div class="form__row">
-      <label for="email" class="form__label">Email (required):</label>
-      <div class="form__field-description" id="email-description">Please provide your valid email.</div>
-      <input
-        type="email"
-        id="email"
-        class="form__input"
-        placeholder="Enter email"
-        aria-describedby="email-description"
-        autocomplete="email"
-        [errorHandling]="submitAttempted()"
-        [control]="registrationForm.email"/>
-    </div>
-    <div class="form__row">
-      <label for="password" class="form__label">Password (required):</label>
-      <div class="form__field-description" id="password-description">
-        Please provide a safe password of at least {{ minimalPasswordLength }} characters, containing at least one special, one lower case, one higher case character and one number.
-      </div>
-
-      <input
-        type="password"
-        id="password"
-        class="form__input"
-        placeholder="Enter your password"
-        aria-describedby="password-description"
-        autocomplete="new-password"
-        [control]="registrationForm.password"
-        [errorHandling]="submitAttempted()"/>
-    </div>
-    <div class="form__row">
-      <label for="confirm-password" class="form__label">Confirm password (required):</label>
-      <div class="form__field-description" id="confirm-password-description">
-        Please repeat the password from before to avoid mistakes.
-      </div>
-
-      <input
-        type="password"
-        id="confirm-password"
-        class="form__input"
-        placeholder="Confirm your password"
-        aria-describedby="confirm-password-description"
-        autocomplete="new-password"
-        [control]="registrationForm.confirmPassword"
-        [errorHandling]="submitAttempted()"/>
-    </div>
-
-  </fieldset>
-
-  <fieldset class="form__fieldset">
-    <legend class="form__legend">Your profile</legend>
-
-    <div class="form__row">
-      <label for="name" class="form__label">Name (required):</label>
-      <div class="form__field-description" id="name-description">
-        Please provide your full name, including your first and last or family name with a potential title like Dr..
-      </div>
-
-      <input
-        type="text"
-        id="name"
-        class="form__input"
-        placeholder="Enter your full name"
-        aria-describedby="name-description"
-        autocomplete="name"
-        [control]="registrationForm.name"
-        [errorHandling]="submitAttempted()"/>
-    </div>
-
-    <div class="form__row">
-      <div class="form__checkbox-wrapper">
-        <input type="checkbox"
-               class="form__checkbox"
-               id="setup-public-profile"
-               [control]="registrationForm.setupPublicProfile"/>
-        <label for="setup-public-profile" class="form__label form__label--checkbox">Setup public profile</label>
-      </div>
-      <div class="form__field-description form__field-description--checkbox" id="setup-public-profile-description">Check this box if you want to setup a
-        public profile. You will need to provide your biography.
-      </div>
-    </div>
-    @if (registration().setupPublicProfile) {
       <div class="form__row">
-        <label for="biography" class="form__label">Biography:</label>
-        <div class="form__field-description" id="bio-description">
-          Please provide a biography of your person. It should be at least 10 characters long.
-        </div>
-        <textarea
-          id="biography"
+        <label for="email" class="form__label">Email (required):</label>
+        <div class="form__field-description" id="email-description">Please provide your valid email.</div>
+        <input
+          type="email"
+          id="email"
           class="form__input"
-          rows="5"
-          placeholder="Enter biography"
-          aria-describedby="bio-description"
-          [control]="registrationForm.biography"
-          [errorHandling]="submitAttempted()"></textarea>
+          placeholder="Enter email"
+          aria-describedby="email-description"
+          autocomplete="email"
+          [errorHandling]="submitAttempted()"
+          [control]="registrationForm.email"/>
       </div>
-    }
+      <div class="form__row">
+        <label for="password" class="form__label">Password (required):</label>
+        <div class="form__field-description" id="password-description">
+          Please provide a safe password of at least {{ minimalPasswordLength }} characters, containing at least one
+          special, one lower case, one higher case character and one number.
+        </div>
 
-  </fieldset>
+        <input
+          type="password"
+          id="password"
+          class="form__input"
+          placeholder="Enter your password"
+          aria-describedby="password-description"
+          autocomplete="new-password"
+          [control]="registrationForm.password"
+          [errorHandling]="submitAttempted()"/>
+      </div>
+      <div class="form__row">
+        <label for="confirm-password" class="form__label">Confirm password (required):</label>
+        <div class="form__field-description" id="confirm-password-description">
+          Please repeat the password from before to avoid mistakes.
+        </div>
 
-  <!-- TODO: cleanup -->
-  <!--
-  Errors: {{registrationForm().errors() | json}}<br />
-  Submitting: {{registrationForm().submitting() | json}}<br />
-  Valid: {{registrationForm().valid() | json}}<br />
-  Value: {{registrationForm().value() | json}}<br />
-  -->
+        <input
+          type="password"
+          id="confirm-password"
+          class="form__input"
+          placeholder="Confirm your password"
+          aria-describedby="confirm-password-description"
+          autocomplete="new-password"
+          [control]="registrationForm.confirmPassword"
+          [errorHandling]="submitAttempted()"/>
+      </div>
 
-  <div class="form__row">
-    @if (submitAttempted() && registrationForm().invalid()) {
-      <p class="form__general-error">
-        There are errors in the form, please check above.
-      </p>
-    }
-    <div class="form__buttons">
-      <button class="button" [disabled]="registrationForm().submitting()">{{registrationForm().submitting() ? 'Submitting' : 'Submit'}}</button>
-      <button class="button" type="reset">Reset</button>
+    </fieldset>
+
+    <fieldset class="form__fieldset">
+      <legend class="form__legend">Your profile</legend>
+
+      <div class="form__row">
+        <label for="name" class="form__label">Name (required):</label>
+        <div class="form__field-description" id="name-description">
+          Please provide your full name, including your first and last or family name with a potential title like Dr..
+        </div>
+
+        <input
+          type="text"
+          id="name"
+          class="form__input"
+          placeholder="Enter your full name"
+          aria-describedby="name-description"
+          autocomplete="name"
+          [control]="registrationForm.name"
+          [errorHandling]="submitAttempted()"/>
+      </div>
+
+      <div class="form__row">
+        <div class="form__checkbox-wrapper">
+          <input type="checkbox"
+                 class="form__checkbox"
+                 id="setup-public-profile"
+                 [control]="registrationForm.setupPublicProfile"/>
+          <label for="setup-public-profile" class="form__label form__label--checkbox">Setup public profile</label>
+        </div>
+        <div class="form__field-description form__field-description--checkbox" id="setup-public-profile-description">
+          Check this box if you want to setup a
+          public profile. You will need to provide your biography.
+        </div>
+      </div>
+      @if (registration().setupPublicProfile) {
+        <div class="form__row">
+          <label for="biography" class="form__label">Biography:</label>
+          <div class="form__field-description" id="bio-description">
+            Please provide a biography of your person. It should be at least 10 characters long.
+          </div>
+          <textarea
+            id="biography"
+            class="form__input"
+            rows="5"
+            placeholder="Enter biography"
+            aria-describedby="bio-description"
+            [control]="registrationForm.biography"
+            [errorHandling]="submitAttempted()"></textarea>
+        </div>
+      }
+
+    </fieldset>
+
+    <!-- TODO: cleanup -->
+    <!--
+    Errors: {{registrationForm().errors() | json}}<br />
+    Submitting: {{registrationForm().submitting() | json}}<br />
+    Valid: {{registrationForm().valid() | json}}<br />
+    Value: {{registrationForm().value() | json}}<br />
+    -->
+
+    <div class="form__row">
+      @if (submitAttempted()) {
+        <app-form-errors [errors]="registrationForm().errors()" [fieldName]="''"></app-form-errors>
+      }
+      <div class="form__buttons">
+        <button class="button"
+                [disabled]="registrationForm().submitting()">{{ registrationForm().submitting() ? 'Submitting' : 'Submit' }}
+        </button>
+        <button class="button" type="reset">Reset</button>
+      </div>
     </div>
-  </div>
-</form>
-
-<div class="extra">
+  </form>
   <br>
   <hr/>
   <br/>
-  <p class="submit-outiside">If for whatever reason you need to have a submit button outside of the form, you can always reference the form by
+  <p class="submit-outiside">If for whatever reason you need to have a submit button outside of the form, you can always
+    reference the form by
     id: </p>
   <div>
     <button form="registration-form" class="button">Submit outside of HTML form</button>
   </div>
+}
+<div class="extra">
   <br/>
   <hr/>
   <h2 class="subtitle">Resources used</h2>
@@ -168,7 +175,9 @@
       <a target="_blank" href="https://www.w3.org/WAI/tutorials/forms/">Forms Tutorial W3</a>
     </li>
     <li>
-      <a target="_blank" href="https://medium.com/mustakbil/angular-signal-forms-deep-dive-build-smarter-forms-with-new-signal-forms-api-in-angular-21-1feb15a68403">Angular Signal Forms Deep Dive: Build Smarter Forms with New Signal Forms API in Angular 21+</a>
+      <a target="_blank"
+         href="https://medium.com/mustakbil/angular-signal-forms-deep-dive-build-smarter-forms-with-new-signal-forms-api-in-angular-21-1feb15a68403">Angular
+        Signal Forms Deep Dive: Build Smarter Forms with New Signal Forms API in Angular 21+</a>
     </li>
   </ul>
   <h2 class="subtitle">General tips & tricks</h2>
